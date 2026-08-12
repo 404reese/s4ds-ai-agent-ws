@@ -1,0 +1,16 @@
+# Core
+huggingface_hub>=0.30.0
+python-dotenv>=1.0.0
+
+# Tokenizer only (Lab 1) — no model weights downloaded, no GPU needed
+transformers>=4.45.0
+
+# Agent framework (Lab 4+)
+smolagents>=1.14.0
+
+# Deployment (Lab 5)
+gradio>=5.0.0
+
+# Utilities used in labs
+requests>=2.31.0
+duckduckgo-search>=6.0.0
