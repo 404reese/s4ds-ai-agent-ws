@@ -53,10 +53,25 @@ notebook access on).
 
 Take-home: **[Project 1](projects/project-1.md)** — due before Day 2 starts.
 
-## Day 2 — Better agents + fine-tuning
+## Day 2 — MCP (use) then fine-tuning
 
-Added after Day 1. Covers custom tools, agentic RAG, and LoRA fine-tuning for
-function calling.
+First half: plug into a real MCP server (Mindicator — Mumbai transit). Second half:
+why fine-tune, LoRA intuition, and a Colab LoRA SFT lab.
+
+| Lab | File | What you build |
+|-----|------|----------------|
+| 0 | `day2/00_mcp_ping.py` | Connect to Mindicator MCP, list tools, health check |
+| 1 | `day2/01_what_is_mcp.py` | Day-1 in-process tool vs MCP tool over HTTP |
+| 2 | `day2/02_mindicator_agent.py` | smolagents agent over Mindicator (agentic SQL) |
+| — | `notebooks/day2_labs.ipynb` | Colab twin of the MCP labs |
+| — | `notebooks/day2_lora.ipynb` | Post-break Colab: LoRA SFT with TRL |
+
+Take-home: **[Project 2](projects/project-2.md)** — compose 2+ MCP servers.
+
+Hosted Mindicator URL: see `MINDICATOR_MCP_URL` in `.env.example`.
+
+LoRA notebook installs its own training deps inside Colab (`trl`, `peft`, etc.) —
+you do not need a GPU for the MCP labs.
 
 ---
 
@@ -73,6 +88,10 @@ Colab runtime with a different account, or pair up with someone who hasn't.
 
 **Agent loops forever** — this is normal and we cover why in Lab 3. Every script
 here has a `max_steps` guard so it stops instead of burning your quota.
+
+**MCP connection failed (Day 2)** — check `MINDICATOR_MCP_URL` in `.env` matches
+the hosted Mindicator URL, and that transport is `streamable-http`
+(see `day2/00_mcp_ping.py`). Wait and retry if the host is briefly unreachable.
 
 ---
 
