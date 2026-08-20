@@ -5,12 +5,21 @@ python-dotenv>=1.0.0
 # Tokenizer only (Lab 1) — no model weights downloaded, no GPU needed
 transformers>=4.45.0
 
-# Agent framework (Lab 4+)
-smolagents>=1.14.0
-
+# Agent framework (Lab 4+ / MCP)
+# [mcp] pulls the MCP client bits used by smolagents.MCPClient
+# mcp 2.0 renamed streamablehttp_client -> streamable_http_client;
+# smolagents/mcpadapt still import the 1.x name, so stay on mcp 1.x.
+smolagents[mcp]>=1.14.0
+mcp>=1.9.0,<2.0.0
+fastmcp>=2.0.0
+'smolagents[openai]'
 # Deployment (Lab 5)
 gradio>=5.0.0
 
 # Utilities used in labs
 requests>=2.31.0
+duckduckgo-search>=6.0.0
+
+# Day 2 LoRA Colab installs its own stack in-notebook (trl, peft, bitsandbytes).
+# Do not add those here — they are heavy and GPU-oriented.
 ddgs>=9.0.0
