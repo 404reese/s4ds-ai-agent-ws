@@ -38,7 +38,6 @@ cp .env.example .env
 python day1/00_setup_check.py
 ```
 
-### Option B — Google Colab (fallback, works on any laptop)
 
 ### Option B — Google Colab (fallback, works on any laptop)
 day1_labs.ipynb
@@ -49,6 +48,7 @@ https://drive.google.com/file/d/15QNSDrEQyiJdWp63AvpXF0oAjpQAbp2q/view?usp=shari
 
 day1_mcp_labs.ipynb
 https://drive.google.com/file/d/1pz93SAJJRnmvSVzb8bhDffNoIWqxbwmg/view?usp=sharing
+
 ---
 
 ## Day 1 — Foundations + ship your first agent
