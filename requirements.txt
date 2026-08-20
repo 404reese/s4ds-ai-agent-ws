@@ -22,3 +22,4 @@ duckduckgo-search>=6.0.0
 
 # Day 2 LoRA Colab installs its own stack in-notebook (trl, peft, bitsandbytes).
 # Do not add those here — they are heavy and GPU-oriented.
+ddgs>=9.0.0
