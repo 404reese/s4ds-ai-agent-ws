@@ -12,7 +12,7 @@ transformers>=4.45.0
 smolagents[mcp]>=1.14.0
 mcp>=1.9.0,<2.0.0
 fastmcp>=2.0.0
-'smolagents[openai]'
+smolagents[openai]
 # Deployment (Lab 5)
 gradio>=5.0.0
 
