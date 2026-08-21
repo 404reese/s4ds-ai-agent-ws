@@ -1,0 +1,193 @@
+{
+  "name": "AI Career Coach Web App",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "2eafd9c8-11d4-4830-8ae5-99347ba0341e",
+        "formTitle": "AI Career Coach 🎓",
+        "formDescription": "Paste your details below. Our AI will tailor your resume and prep you for the interview.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Your Name",
+              "placeholder": "John Doe"
+            },
+            {
+              "fieldLabel": "Job Description",
+              "placeholder": "Paste the Job Description here..."
+            },
+            {
+              "fieldLabel": "Your Resume",
+              "placeholder": "Paste your current Resume here..."
+            }
+          ]
+        },
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "8305b3bd-aa14-40a1-a6da-9203e1de997c",
+      "name": "Career Input Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        176,
+        64
+      ],
+      "webhookId": "2eafd9c8-11d4-4830-8ae5-99347ba0341e"
+    },
+    {
+      "parameters": {
+        "promptType": "=define",
+        "text": "=You are an expert ATS-optimized resume writer. Your task is to strategically rewrite and tailor the provided resume to perfectly align with the target Job Description. \n\nCONTENT STRATEGY:\n- Inject relevant keywords from the Job Description naturally throughout the resume.\n- Start all bullet points with strong, varied action verbs.\n- Prioritize and highlight quantifiable achievements and metrics.\n- Condense less relevant experience and expand on highly relevant experience.\n\nFORMATTING:\n- Use clean, standard Markdown formatting.\n- Structure with clear headers: Professional Summary, Core Competencies/Skills, Professional Experience, and Education.\n- Use bullet points for job descriptions; do not use paragraphs for experience.\n\nCRITICAL RULES:\n1. DO NOT output placeholders like [Name], [Date], or [Skills]. Use ONLY the actual data provided in the original resume.\n2. DO NOT invent new skills, experiences, or metrics that do not exist in the original resume. \n3. DO NOT write a description of what you are going to do or provide advice. \n4. DO NOT say \"Here is the resume\" or any other conversational filler.\n5. Output ONLY the final, rewritten resume text.\n\nJOB DESCRIPTION:\n{{ $json['Job Description'] }}\n\nORIGINAL RESUME:{{ $json['Your Resume'] }}"
+      },
+      "id": "6df40c27-83d3-4bea-b359-27c5bf19757e",
+      "name": "Step 1: Tailor Resume",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        416,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert technical interviewer. Analyze the Job Description and the Tailored Resume to generate exactly 3 highly relevant, rigorous interview questions the candidate must prepare for.\n\nQUESTION STRATEGY:\n- Target the critical intersection: Focus on the most important requirements in the Job Description that the candidate claims experience with in their resume.\n- Mix the question types: Provide exactly one Behavioral (prompting for STAR method), one Technical/Depth (testing the \"how\"), and one Situational/Problem-Solving question.\n- Make them specific: Reference specific technologies, methodologies, or scenarios mentioned in the provided texts. Do not ask generic questions.\n\nOUTPUT RULES:\n- Output ONLY the 3 questions.\n- Number them 1 to 3.\n- No introductory text, no explanations, and no closing remarks.\n\nJOB DESCRIPTION:\n{{ $('Career Input Form').item.json['Job Description'] }}\n\n\nTAILORED RESUME:\n{{ $('Step 1: Tailor Resume').item.json.text }}"
+      },
+      "id": "df25b2c5-b6da-46f7-ac93-40ea97acfffb",
+      "name": "Step 2: Interview Prep",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        656,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<div style='font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;'>\n  <h1 style='color: #2c3e50;'>🚀 Hi {{ $json.user_name }}, Your AI Career Package is Ready!</h1>\n  \n  <h2 style='color: #2980b9; border-bottom: 2px solid #2980b9; padding-bottom: 5px;'>📄 Your Tailored Resume</h2>\n  <div style='background: #f9f9f9; padding: 20px; border-radius: 8px; border-left: 4px solid #2980b9; white-space: pre-wrap; line-height: 1.6;'>\n    {{ $('Step 1: Tailor Resume').item.json.text }}\n  </div>\n\n  <h2 style='color: #27ae60; margin-top: 30px; border-bottom: 2px solid #27ae60; padding-bottom: 5px;'>🎤 Your Interview Prep</h2>\n  <div style='background: #f1f8e9; padding: 20px; border-radius: 8px; border-left: 4px solid #27ae60; line-height: 1.6;'>\n    {{ $('Step 2: Interview Prep').item.json.text }}\n  </div>\n  \n  <p style='margin-top: 30px; color: #7f8c8d; text-align: center;'>Good luck with your application! 🍀</p>\n</div>",
+        "options": {}
+      },
+      "id": "aa8ef44d-bd62-462e-81d0-1f7d3b9365ac",
+      "name": "Show Result on Screen",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        368,
+        256
+      ],
+      "id": "52ed0067-b3f6-474f-a056-e3090fbfb532",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "a0jgYaTYMFJ7Tm7e",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        256
+      ],
+      "id": "0e943c5e-ffb3-4c8b-83af-f75585969274",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "a0jgYaTYMFJ7Tm7e",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Career Input Form": {
+      "main": [
+        [
+          {
+            "node": "Step 1: Tailor Resume",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Step 1: Tailor Resume": {
+      "main": [
+        [
+          {
+            "node": "Step 2: Interview Prep",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Step 2: Interview Prep": {
+      "main": [
+        [
+          {
+            "node": "Show Result on Screen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Step 1: Tailor Resume",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Step 2: Interview Prep",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9175beb4-680c-47c9-ac03-307d931be715",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2598ebdf824a5af9bdf939a9b69f72618b8d865f356807df98c268ed14574f37"
+  },
+  "nodeGroups": [],
+  "id": "4VkzeyNPQ2uxpT4E",
+  "tags": []
+}
