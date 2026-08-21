@@ -49,6 +49,9 @@ https://drive.google.com/file/d/15QNSDrEQyiJdWp63AvpXF0oAjpQAbp2q/view?usp=shari
 
 day1_mcp_labs.ipynb
 https://drive.google.com/file/d/1pz93SAJJRnmvSVzb8bhDffNoIWqxbwmg/view?usp=sharing
+
+day2_rag.ipynb
+https://drive.google.com/file/d/1m_cZ61J77oNSM-M8deSRBIkIX4IYC-kl/view?usp=sharing
 ---
 
 ## Day 1 — Foundations + ship your first agent
